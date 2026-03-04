@@ -2,6 +2,22 @@
 title: "Collaborator Analysis"
 format: html
 ---
+## Excercise: Explore, Clean, and Wrangle Data
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(here)
+
+```
+
+```{r}
+lobster_traps <- read_csv("data/Lobster_Trap_Counts_All_Years_20210519.csv")
+
+```
+
+
 
 ## Quarto
 
@@ -15,7 +31,7 @@ When you click the **Render** button a document will be generated that includes 
 1 + 1
 ```
 
-You can add options to executable code like this 
+You can add options to executable code like this
 
 ```{r}
 #| echo: false
