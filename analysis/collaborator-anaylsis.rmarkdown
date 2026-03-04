@@ -2,7 +2,9 @@
 title: "Collaborator Analysis"
 format: html
 ---
+
 ## Excercise: Explore, Clean, and Wrangle Data
+
 ```{r}
 library(readr)
 library(dplyr)
@@ -11,6 +13,7 @@ library(tidyr)
 library(here)
 
 ```
+
 ```{r}
 setwd("/home/kreece/Patrick-Kristen/data")
 
@@ -24,15 +27,19 @@ lobster_traps <- lobster_traps %>%
     mutate(TRAPS = na_if(TRAPS, -99999))
 
 ```
+
 ```{r}
 not_napl <- lobster_traps %>% 
     filter(SITE != "NAPL")
 
 ```
+
 ```{r}
 carp_20_traps <- lobster_traps %>% 
     filter(SITE == "CARP" & TRAPS > 20)
 ```
 
 
+
 The `echo: false` option disables the printing of code (only output is displayed).
+
