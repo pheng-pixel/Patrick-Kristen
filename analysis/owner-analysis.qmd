@@ -4,7 +4,7 @@ author: "Kristen" "Patrick"
 format: html
 ---
 
-# Exercise: Explore, Clean, and Wrangle Data
+## Exercise: Explore, Clean, and Wrangle Data
 ```{r}
 #|warning: false
 library(readr)
@@ -17,5 +17,68 @@ library(here)
 setwd("/home/pheng/Patrick-Kristen/data")
 lobster_abundance <- read_csv("Lobster_Abundance_All_Years_20220829.csv")
 lobster_abundance
+```
+```{r}
+lobster_abundance<-lobster_abundance %>% 
+  mutate(SIZE_MM=na_if(SIZE_MM,-99999))
+lobster_abundance
+```
+```{r}
+no_napl_lobster_abundance<-lobster_abundance %>% 
+  filter(SITE !="NAPL")
+lobster_abundance
+```
+```{r}
+aque_and_over_70_lobster_abundance<-lobster_abundance %>% 
+  filter(SITE =="AQUE" & SIZE_MM>70)
+lobster_abundance
+```
+```{r}
+maximum_lobster <- lobster_abundance %>% 
+  group_by(SITE, MONTH) %>% 
+  summarize(MAX_LENGTH = max(SIZE_MM, na.rm = TRUE))
+maximum_lobster
+```
+## Exercise: Data Visualization
+```{r}
+Lobster_Size_Site_Plot<-ggplot(data=lobster_abundance, mapping=aes(x=SIZE_MM))+
+  geom_histogram()+
+  facet_wrap(~SITE)+
+  labs(x="Size (mm)", y="Number of Lobsters")+
+  theme_classic()
+Lobster_Size_Site_Plot
+ggsave("Lobster_Size_Site_Plot",Lobster_Size_Site_Plot, device="png", path="/home/pheng/Patrick-Kristen/figs")
+```
+```{r}
+lobsters_summarize<-lobster_abundance %>% 
+  group_by(SITE,YEAR) %>% 
+  count()
+
+Lobster_Site_Abundance<-ggplot(data=lobsters_summarize, aes(x=YEAR, y=n, color=SITE))+
+  geom_line()+
+  geom_point()+
+  labs(x="Year", y="Number of Lobsters")+
+  theme_classic()
+Lobster_Site_Abundance
+ggsave("Lobster_Site_Abundance",Lobster_Site_Abundance, device="png", path="/home/pheng/Patrick-Kristen/figs")
+```
+```{r}
+lobster_size_lrg<-lobster_abundance %>% 
+  filter(YEAR %in% c(2019,2020,2021)) %>% 
+  mutate(SIZE_BIN=if_else(
+    SIZE_MM<=70,
+    true="small",
+    false="big"
+  )) %>% 
+  group_by(SITE, SIZE_BIN) %>% 
+  summarize(Count=n()) %>% 
+  drop_na
+
+Lobster_Size_Plot<-ggplot(data=lobster_size_lrg, aes(x = SITE, y = Count, fill = SIZE_BIN))+
+  geom_col(position="dodge")+
+  labs(x="Site Code", y="Number of Lobsters")+
+  theme_classic()
+Lobster_Size_Plot
+ggsave("Lobster_Size_Plot",Lobster_Size_Plot, device="png", path="/home/pheng/Patrick-Kristen/figs")
 ```
 
