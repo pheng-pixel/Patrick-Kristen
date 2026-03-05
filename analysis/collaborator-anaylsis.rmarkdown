@@ -3,7 +3,9 @@ title: "Collaborator Analysis"
 format: html
 ---
 
+
 ## Excercise: Explore, Clean, and Wrangle Data
+
 
 ```{r}
 library(readr)
@@ -39,25 +41,32 @@ carp_20_traps <- lobster_traps %>%
     filter(SITE == "CARP" & TRAPS > 20)
 ```
 
+
 ## step 10.4 question 4
+
 
 ```{r}
 carp_20_traps %>% 
   group_by(SITE,MONTH) %>% 
   summarize(max(TRAPS)) 
 ```
+
 ## Exercise:Data Visualization
+
 ```{r}
 ggplot(data = lobster_traps, aes(x = TRAPS)) +
     geom_histogram() +
     facet_wrap( ~ YEAR)
 ```
+
 ### Question 6
+
 ```{r}
 lobsters_traps_summarize <- lobster_traps %>% 
   group_by(SITE, YEAR) %>% 
   summarize(TOTAL_TRAPS = sum(TRAPS, na.rm = TRUE))
 ```
+
 ```{r}
 # line plot
 ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
@@ -68,7 +77,9 @@ ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
     geom_point(aes(color = SITE)) +
     geom_line(aes(color = SITE))
 ```
+
 ### Question 7
+
 ```{r}
 lobster_traps_fishing_pressure <- lobster_traps %>% 
     filter(YEAR %in% c(2019, 2020, 2021)) %>%
@@ -77,23 +88,31 @@ lobster_traps_fishing_pressure <- lobster_traps %>%
     summarize(COUNT = n()) %>%
     drop_na()
 ```
+
 ### bar plot
+
 ```{r}
 # bar plot
 ggplot(data = lobster_traps_fishing_pressure, aes(x = SITE, y = COUNT, fill = FISHING_PRESSURE)) +
     geom_col() + theme_bw()
 ```
+
 ### dodged bar plot
+
 
 ```{r}
 # dodged bar plot
 ggplot(data = lobster_traps_fishing_pressure, aes(x = SITE, y = COUNT, fill = FISHING_PRESSURE)) +
     geom_col(position = "dodge")
 ```
+
 ### Question 8
+
 ```{r}
 
 ```
 
 
+
 The `echo: false` option disables the printing of code (only output is displayed).
+
