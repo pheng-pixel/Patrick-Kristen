@@ -2,7 +2,9 @@
 title: "Collaborator Analysis"
 format: html
 ---
+
 ## Excercise: Explore, Clean, and Wrangle Data
+
 ```{r}
 library(readr)
 library(dplyr)
@@ -11,6 +13,7 @@ library(tidyr)
 library(here)
 
 ```
+
 ```{r}
 setwd("/home/kreece/Patrick-Kristen/data")
 
@@ -24,15 +27,24 @@ lobster_traps <- lobster_traps %>%
     mutate(TRAPS = na_if(TRAPS, -99999))
 
 ```
+
 ```{r}
 not_napl <- lobster_traps %>% 
     filter(SITE != "NAPL")
 
 ```
+
 ```{r}
 carp_20_traps <- lobster_traps %>% 
     filter(SITE == "CARP" & TRAPS > 20)
 ```
 
+## step 10.4 question 4
+
+Find the maximum number of commercial trap floats using max() and group by SITE and MONTH. Think about how you want to treat the NA values in TRAPS (Hint: check the arguments in max()). Check your output.
+
+```{r}
+?max()
+```
 
 The `echo: false` option disables the printing of code (only output is displayed).
